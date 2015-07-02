@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>解决你午饭的选择难题</title>
+    <script src="../lib/js/angular-1.4.1.js"></script>
+    <script src="../lib/js/firebase-2.2.7.js"></script>
+    <script src="../lib/js/angularfire-1.1.2.js"></script>
+    <script src="lunch.js"></script>
+</head>
+<body ng-app="lunchApp" ng-controller="lunchAppController">
+    <section class="today" ng-if="today.$value">
+        <span class="introduction">今天为您推荐的是</span>
+        <span class="value" ng-bind="today.$value"></span>
+    </section>
+    <section class="choose" ng-if="isChoicesLoaded">
+        <button class="self-choose" ng-click="selfChoose()" ng-disabled="!canSelfChoose()">自己做主</button>
+        <p class="result" ng-show="selfChooseResult.$value">
+            <span class="introduction">要不要试试</span>
+            <span class="value" ng-show="selfChooseResult.$value" ng-bind="selfChooseResult.$value"></span>
+        </p>
+    </section>
+    <section class="source" ng-if="isChoicesLoaded">
+        <span class="introduction before-list">有哪些选择</span>
+        <span class="introduction before-filter">太多了？用这个过滤一下</span>
+        <input class="filter" type="text" ng-model="$parent.filter">
+        <ul class="result">
+            <li class="choice" ng-repeat="choice in filteredChoices track by choice.$value" ng-bind="choice.$value"></li>
+        </ul>
+        <span class="introduction before-add">没有你的最爱？添加一个你喜欢的吧</span>
+        <input class="new-choice" type="text" ng-model="$parent.newChoice">
+        <button class="submit" ng-disabled="!canAddChoice()" ng-click="addChoice()">这个才是王道</button>
+    </section>
+</body>
+</html>

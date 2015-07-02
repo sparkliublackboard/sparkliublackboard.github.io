@@ -1,0 +1,5 @@
+# WebStorm
+.idea
+
+# Bower libraries
+bower_components
